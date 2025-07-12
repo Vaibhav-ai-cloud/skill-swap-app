@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Feedback – Skill Swap</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Inter Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-start: #1a1f3a;
+      --bg-end: #2c2f4a;
+      --glass-bg: rgba(255, 255, 255, 0.05);
+      --neon-purple: #6945f9;
+      --btn-start: #7c5fff;
+      --btn-end: #b28dff;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, var(--bg-start), var(--bg-end));
+      font-family: 'Inter', sans-serif;
+      color: #ffffffcc;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .glass-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 10px var(--neon-purple);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 40px;
+      max-width: 600px;
+      width: 90%;
+      color: #fff;
+      margin-top: 40px;
+    }
+
+    .glass-card h2 {
+      text-align: center;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 30px;
+    }
+
+    label {
+      color: #ffffffee;
+      font-weight: 500;
+    }
+
+    .form-control,
+    .form-select {
+      background-color: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #fff;
+      border-radius: 12px;
+      font-size: 15px;
+      box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.04);
+    }
+
+    .form-control::placeholder {
+      color: rgba(255, 255, 255, 0.4);
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+      color: #ffffff;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-color: var(--neon-purple);
+      box-shadow: 0 0 0 2px var(--neon-purple);
+    }
+
+    .btn-submit {
+      background: linear-gradient(135deg, var(--btn-start), var(--btn-end));
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 16px;
+      padding: 12px;
+      margin-top: 10px;
+      transition: all 0.3s ease;
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px var(--btn-start);
+    }
+
+    /* Emoji Reactions */
+    .emoji-reactions {
+      position: fixed;
+      right: 30px;
+      bottom: 50px;
+      font-size: 28px;
+      display: flex;
+      gap: 15px;
+      cursor: pointer;
+      z-index: 100;
+    }
+
+    .emoji-btn {
+      transition: transform 0.2s ease;
+      user-select: none;
+    }
+
+    .emoji-btn:hover {
+      transform: scale(1.2);
+    }
+
+    .floating-emoji {
+      position: absolute;
+      animation: floatUp 1.5s ease-out forwards;
+      pointer-events: none;
+      font-size: 28px;
+      z-index: 999;
+    }
+
+    @keyframes floatUp {
+      0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-100px) scale(1.8);
+      }
+    }
+
+    footer {
+      margin-top: 40px;
+      padding: 20px 10px;
+      text-align: center;
+      color: rgba(255, 255, 255, 0.4);
+      font-size: 13px;
+      width: 100%;
+    }
+
+    /* ✅ Responsive Fix for Mobile Emojis */
+    @media (max-width: 500px) {
+      .emoji-reactions {
+        position: static;
+        justify-content: center;
+        margin-top: 20px;
+        margin-bottom: -10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 💬 Feedback Form Card -->
+  <div class="glass-card">
+    <h2>📝 Leave Feedback</h2>
+    <form method="POST" action="#">
+      <div class="mb-3">
+        <label for="yourName" class="form-label">Your Name</label>
+        <input type="text" class="form-control" id="yourName" name="your_name" placeholder="e.g. Vaibhav" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="partnerName" class="form-label">Swap Partner's Name</label>
+        <input type="text" class="form-control" id="partnerName" name="partner_name" placeholder="e.g. Rudra" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="rating" class="form-label">Rating</label>
+        <select class="form-select" id="rating" name="rating" required>
+          <option value="">Select Rating</option>
+          <option value="5">⭐️⭐️⭐️⭐️⭐️ Excellent</option>
+          <option value="4">⭐️⭐️⭐️⭐️ Good</option>
+          <option value="3">⭐️⭐️⭐️ Average</option>
+          <option value="2">⭐️⭐️ Poor</option>
+          <option value="1">⭐️ Very Poor</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label for="feedbackText" class="form-label">Feedback</label>
+        <textarea class="form-control" id="feedbackText" name="feedback" rows="4" placeholder="Your thoughts..." required></textarea>
+      </div>
+
+      <button type="submit" class="btn btn-submit w-100">✅ Submit Feedback</button>
+    </form>
+  </div>
+
+  <!-- 🎉 Emoji Reactions (OUTSIDE the card) -->
+  <div class="emoji-reactions">
+    <span class="emoji-btn">😊</span>
+    <span class="emoji-btn">👍</span>
+    <span class="emoji-btn">❤️</span>
+    <span class="emoji-btn">😍</span>
+  </div>
+
+  <footer>&copy; 2025 Skill Swap | Designed by Vaibhav Rajput</footer>
+
+  <!-- 🚀 JavaScript for Floating Emojis -->
+  <script>
+    document.querySelectorAll('.emoji-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const emoji = btn.textContent;
+        const float = document.createElement('span');
+        float.className = 'floating-emoji';
+        float.textContent = emoji;
+
+        const { top, left } = btn.getBoundingClientRect();
+        float.style.left = `${left}px`;
+        float.style.top = `${top}px`;
+
+        document.body.appendChild(float);
+
+        setTimeout(() => {
+          float.remove();
+        }, 1500);
+      });
+    });
+  </script>
+
+</body>
+</html>
