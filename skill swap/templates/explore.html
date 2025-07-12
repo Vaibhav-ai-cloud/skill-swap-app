@@ -1,59 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Explore Users - Skill Swap</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Explore – Skill Swap</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
   <style>
     body {
-      background-color: white;
-      color: #f8f9fa;
-      font-family: 'Poppins', sans-serif;
-    }
-    .btn-gold {
-      background: linear-gradient(45deg, #d4af37, #c99815);
-      border: none;
+      background: linear-gradient(135deg, #1a1f3a, #2c2f4a);
+      font-family: 'Inter', sans-serif;
       color: white;
-      font-weight: 600;
+      min-height: 100vh;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
     }
-    .btn-gold:hover {
-      background: linear-gradient(45deg, #c99815, #d4af37);
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(15px);
+      border-radius: 20px;
+      padding: 30px;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: 0 0 20px rgba(105, 69, 249, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      text-align: center;
+    }
+
+    h2 {
+      font-weight: 600;
+      margin-bottom: 25px;
+    }
+
+    .form-control {
+      background-color: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.2);
       color: #fff;
+      border-radius: 12px;
+      padding: 10px;
+      margin-bottom: 15px;
+    }
+
+    .form-control::placeholder {
+      color: rgba(255, 255, 255, 0.4);
+    }
+
+    .btn-glass {
+      background: linear-gradient(to right, #7c5fff, #b28dff);
+      color: white;
+      border: none;
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 15px;
+      transition: 0.3s;
+    }
+
+    .btn-glass:hover {
+      box-shadow: 0 0 10px rgba(178, 141, 255, 0.5);
+    }
+
+    .footer {
+      font-size: 13px;
+      margin-top: 20px;
+      color: #bbb;
     }
   </style>
 </head>
 <body>
-<div class="container py-5">
-  <h2 class="text-center mb-4" style="color:#d4af37;">Explore Other Users</h2>
-  {% if user_skills %}
-    {% for user in user_skills %}
-      <div class="card bg-dark text-light mb-3 shadow">
-        <div class="card-header" style="background: linear-gradient(45deg, #d4af37, #c99815); color:#121212;">
-          {{ user.user_name }}
-        </div>
-        <div class="card-body">
-          {% if user.skills %}
-            <ul class="list-group list-group-flush">
-              {% for skill in user.skills %}
-                <li class="list-group-item bg-dark text-light d-flex justify-content-between align-items-center">
-                  {{ skill[1] }}
-                  <a href="/request_swap/{{ user.user_id }}/{{ skill[0] }}" class="btn btn-sm btn-gold">Request Swap</a>
-                </li>
-              {% endfor %}
-            </ul>
-          {% else %}
-            <p class="text-muted">No skills added yet.</p>
-          {% endif %}
-        </div>
-      </div>
-    {% endfor %}
-  {% else %}
-    <p class="text-muted text-center">No other users found.</p>
-  {% endif %}
-  <div class="text-center mt-4">
-    <a href="/dashboard" class="btn btn-outline-light">Back to Dashboard</a>
+
+  <div class="glass-card">
+    <h2>Explore Skills</h2>
+    <form method="GET" action="/explore">
+      <input type="text" name="skill" class="form-control" placeholder="Search by Skill" required>
+      <input type="text" name="location" class="form-control" placeholder="Location (optional)">
+      <button type="submit" class="btn btn-glass">Search</button>
+    </form>
   </div>
-</div>
+
 </body>
 </html>
